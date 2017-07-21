@@ -44,7 +44,7 @@ CC = /usr/bin/gcc
 
 # compile - common flags for TSS library and applications
 
-CCFLAGS += 	-DTPM_POSIX
+CCFLAGS += 	-DTPM_POSIX -DTPM_INTERFACE_TYPE_DEFAULT="\"dev\""
 
 # example of pointing to a locally built openssl 1.1
 # CCFLAGS += 	-I/home/kgold/openssl-1.1.0c/include
@@ -110,7 +110,7 @@ LIBTSSVERSIONED=libtss.so.0.1
 LIBTSSSONAME=libtss.so.0
 
 # symbolic link to the versioned shared library
-# this allows linking to the shared library with '-ltss' 
+# this allows linking to the shared library with '-ltss'
 
 os := $(shell uname -o)
 ifeq ($(os),Cygwin)
@@ -123,7 +123,7 @@ endif
 
 EXE =
 
-# 
+#
 
 TSS_HEADERS=
 
@@ -196,7 +196,7 @@ $(LIBTSS): 	$(TSS_OBJS)
 .PHONY:		clean
 .PRECIOUS:	%.o
 
-clean:		
+clean:
 		rm -f *.o  *~ 	\
 		h*.bin		\
 		rm -f $(LIBTSSSONAME)	\
@@ -244,17 +244,17 @@ dictionaryattacklockreset:		tss2/tss.h dictionaryattacklockreset.o $(LIBTSS)
 dictionaryattackparameters:		tss2/tss.h dictionaryattackparameters.o $(LIBTSS)
 			$(CC) $(LNFLAGS) $(LNAFLAGS) dictionaryattackparameters.o $(LNALIBS) -o dictionaryattackparameters
 duplicate:		tss2/tss.h duplicate.o $(LIBTSS)
-			$(CC) $(LNFLAGS) $(LNAFLAGS) duplicate.o $(LNALIBS) -o duplicate 
+			$(CC) $(LNFLAGS) $(LNAFLAGS) duplicate.o $(LNALIBS) -o duplicate
 eccparameters:		tss2/tss.h eccparameters.o $(LIBTSS)
-			$(CC) $(LNFLAGS) $(LNAFLAGS) eccparameters.o $(LNALIBS) -o eccparameters 
+			$(CC) $(LNFLAGS) $(LNAFLAGS) eccparameters.o $(LNALIBS) -o eccparameters
 ecephemeral:		tss2/tss.h ecephemeral.o $(LIBTSS)
-			$(CC) $(LNFLAGS) $(LNAFLAGS) ecephemeral.o $(LNALIBS) -o ecephemeral 
+			$(CC) $(LNFLAGS) $(LNAFLAGS) ecephemeral.o $(LNALIBS) -o ecephemeral
 encryptdecrypt:		tss2/tss.h encryptdecrypt.o $(LIBTSS)
-			$(CC) $(LNFLAGS) $(LNAFLAGS) encryptdecrypt.o $(LNALIBS) -o encryptdecrypt	
+			$(CC) $(LNFLAGS) $(LNAFLAGS) encryptdecrypt.o $(LNALIBS) -o encryptdecrypt
 eventsequencecomplete:	tss2/tss.h eventsequencecomplete.o $(LIBTSS)
-			$(CC) $(LNFLAGS) $(LNAFLAGS) eventsequencecomplete.o $(LNALIBS) -o eventsequencecomplete	
+			$(CC) $(LNFLAGS) $(LNAFLAGS) eventsequencecomplete.o $(LNALIBS) -o eventsequencecomplete
 evictcontrol:		tss2/tss.h evictcontrol.o $(LIBTSS)
-			$(CC) $(LNFLAGS) $(LNAFLAGS) evictcontrol.o $(LNALIBS) -o evictcontrol	
+			$(CC) $(LNFLAGS) $(LNAFLAGS) evictcontrol.o $(LNALIBS) -o evictcontrol
 flushcontext:		tss2/tss.h flushcontext.o $(LIBTSS)
 			$(CC) $(LNFLAGS) $(LNAFLAGS) flushcontext.o $(LNALIBS) -o flushcontext
 getcommandauditdigest:	tss2/tss.h getcommandauditdigest.o $(LIBTSS)
@@ -420,6 +420,5 @@ ntc2lockconfig:		ntc2lockconfig.o $(LIBTSS)
 
 # for applications, not for TSS library
 
-%.o:		%.c tss2/tss.h 
+%.o:		%.c tss2/tss.h
 		$(CC) $(CCFLAGS) $(CCAFLAGS) $< -o $@
-
