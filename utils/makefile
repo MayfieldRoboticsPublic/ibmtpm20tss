@@ -44,7 +44,7 @@ CC = /usr/bin/gcc
 
 # compile - common flags for TSS library and applications
 
-CCFLAGS += 	-DTPM_POSIX -DTPM_INTERFACE_TYPE_DEFAULT="\"dev\""
+CCFLAGS += 	-DTPM_POSIX -DTPM_INTERFACE_TYPE_DEFAULT="\"dev\"" -DTPM_ENCRYPT_SESSIONS_DEFAULT="\"0\""
 
 # example of pointing to a locally built openssl 1.1
 # CCFLAGS += 	-I/home/kgold/openssl-1.1.0c/include
