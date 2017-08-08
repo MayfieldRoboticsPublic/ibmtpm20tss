@@ -200,7 +200,7 @@ PREFIX = /opt/tpm
 
 .PHONY: install
 install: $(ALL)
-		install -d $(DESTDIR)/$(PREFIX)/bin
+		install -d $(DESTDIR)$(PREFIX)/bin
 		for f in $(ALL); do \
 			install -D -T $$f $(DESTDIR)/$(PREFIX)/bin/ibm_tpm2_$$f; \
 		done
