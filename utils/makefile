@@ -196,6 +196,19 @@ $(LIBTSS): 	$(TSS_OBJS)
 .PHONY:		clean
 .PRECIOUS:	%.o
 
+PREFIX = /opt/tpm
+
+.PHONY: install
+install: $(ALL)
+		install -d $(DESTDIR)/$(PREFIX)/bin
+		for f in $(ALL); do \
+			install -D -T $$f $(DESTDIR)/$(PREFIX)/bin/ibm_tpm2_$$f; \
+		done
+
+.PHONY: uninstall
+uninstall:
+		rm -r $(DESTDIR)$(PREFIX)/bin
+
 clean:
 		rm -f *.o  *~ 	\
 		h*.bin		\
