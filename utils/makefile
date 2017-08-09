@@ -201,13 +201,16 @@ PREFIX = /opt/tpm
 .PHONY: install
 install: $(ALL)
 		install -d $(DESTDIR)$(PREFIX)/bin
-		for f in $(ALL); do \
+		for f in $(UTILS); do \
 			install -D -T $$f $(DESTDIR)/$(PREFIX)/bin/ibm_tpm2_$$f; \
 		done
+		install -D -t $(DESTDIR)$(PREFIX)/bin $(LIBTSSSONAME)
+		install -D -t $(DESTDIR)$(PREFIX)/bin $(LIBTSSVERSIONED)
+		ln -srf $(DESTDIR)$(PREFIX)/bin/$(LIBTSSSONAME) $(DESTDIR)$(PREFIX)/bin/$(LIBTSS)
 
 .PHONY: uninstall
 uninstall:
-		rm -r $(DESTDIR)$(PREFIX)/bin
+		rm -rf $(DESTDIR)$(PREFIX)/bin
 
 clean:
 		rm -f *.o  *~ 	\

@@ -57,9 +57,11 @@ CCFLAGS += -DTPM_NUVOTON
 
 #LNFLAGS += 	-ggdb
 
+LIBS += \
+	$(LIBTSS) \
+	$(LIBTSSA)
 
-ALL += 	$(LIBTSS)				\
-	$(LIBTSSA)				\
+UTILS += \
 	activatecredential$(EXE)		\
 	eventextend$(EXE)			\
 	imaextend$(EXE)				\
@@ -165,12 +167,14 @@ ALL += 	$(LIBTSS)				\
 	timepacket$(EXE)			\
 	createek$(EXE)
 
-ALL	+= 					\
+UTILS	+= 					\
 	ntc2getconfig$(EXE)			\
 	ntc2preconfig$(EXE)			\
 	ntc2lockconfig$(EXE)
 
-# TSS shared library headers 
+ALL += $(LIBS) $(UTILS)
+
+# TSS shared library headers
 
 TSS_HEADERS += 					\
 		tssauth.h 			\
