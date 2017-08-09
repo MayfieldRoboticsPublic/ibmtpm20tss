@@ -95,7 +95,7 @@ LNLLIBS += -lcrypto
 # link - for applications, TSS path, TSS and OpenSSl libraries
 
 # hardening flags for linking executables
-LNAFLAGS += -pie -Wl,-z,now -Wl,-rpath,.
+LNAFLAGS += -pie -Wl,-z,now -Wl,-rpath='$$ORIGIN'
 
 LNALIBS +=  -ltss -lcrypto
 
