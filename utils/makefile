@@ -44,7 +44,7 @@ CC = /usr/bin/gcc
 
 # compile - common flags for TSS library and applications
 
-CCFLAGS += 	-DTPM_POSIX -DTPM_INTERFACE_TYPE_DEFAULT="\"dev\""
+CCFLAGS += 	-DTPM_POSIX -DTPM_INTERFACE_TYPE_DEFAULT="\"dev\"" -DTPM_ENCRYPT_SESSIONS_DEFAULT="\"0\""
 
 # example of pointing to a locally built openssl 1.1
 # CCFLAGS += 	-I/home/kgold/openssl-1.1.0c/include
@@ -95,7 +95,7 @@ LNLLIBS += -lcrypto
 # link - for applications, TSS path, TSS and OpenSSl libraries
 
 # hardening flags for linking executables
-LNAFLAGS += -pie -Wl,-z,now -Wl,-rpath,.
+LNAFLAGS += -pie -Wl,-z,now -Wl,-rpath='$$ORIGIN'
 
 LNALIBS +=  -ltss -lcrypto
 
@@ -195,6 +195,22 @@ $(LIBTSS): 	$(TSS_OBJS)
 
 .PHONY:		clean
 .PRECIOUS:	%.o
+
+PREFIX = /opt/tpm
+
+.PHONY: install
+install: $(ALL)
+		install -d $(DESTDIR)$(PREFIX)/bin
+		for f in $(UTILS); do \
+			install -D -T $$f $(DESTDIR)/$(PREFIX)/bin/ibm_tpm2_$$f; \
+		done
+		install -D -t $(DESTDIR)$(PREFIX)/bin $(LIBTSSSONAME)
+		install -D -t $(DESTDIR)$(PREFIX)/bin $(LIBTSSVERSIONED)
+		ln -srf $(DESTDIR)$(PREFIX)/bin/$(LIBTSSSONAME) $(DESTDIR)$(PREFIX)/bin/$(LIBTSS)
+
+.PHONY: uninstall
+uninstall:
+		rm -rf $(DESTDIR)$(PREFIX)/bin
 
 clean:
 		rm -f *.o  *~ 	\
